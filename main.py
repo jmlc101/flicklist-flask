@@ -18,12 +18,6 @@ def get_current_watchlist():
     # returns user's current watchlist--hard coded for now
     return [ "Star Wars", "Minions", "Freaky Friday", "My Favorite Martian" ]
 
-# TODO: 
-# Modify "My Watchlist" so that you eliminate the need for the "crossoff" form in edit.html. 
-# Now, next to every list item/movie listed in "My Watchlist" you should display a button that says "I Watched it!". 
-# Clicking the button will result in a confirmation message that the movie has been watched. 
-# So you'll need to add a form within the <li> tags of "My Watchlist"
-# Once this is done, delete the "crossoff" form in edit.html
 
 # TODO:
 # Make a ratings.html template which lists all movies that have been crossed off.
@@ -83,6 +77,15 @@ def add_movie():
 
     return render_template('add-confirmation.html', movie=new_movie)
 
+@app.route('/ratings')
+def ratings():
+    return render_template('ratings.html', watchlist=get_current_watchlist())
+
+@app.route('/rating-confirmation', methods=['POST'])
+def rating_confirmation():
+    movie = request.form['movie']
+    rating = request.form['rating']
+    return render_template('rating-confirmation.html', rating=rating, movie=movie)
 
 @app.route("/")
 def index():
